@@ -36,10 +36,44 @@ Vagrant.configure(2) do |config|
   config.vm.provision "shell", inline: <<-SHELL
     sudo apt-get update
     sudo apt-get install -y git
-    mkdir /LSDTopoTools/Git_projects
-    mkdir /LSDTopoTools/Topographic_projects
-    mkdir /LSDTopoTools/FFTW
-    git clone https://github.com/LSDtopotools/LSDTopoTools_AnalysisDriver.git /LSDTopoTools/Git_projects/LSDTopoTools_AnalysisDriver
-    git clone https://github.com/LSDtopotools/LSDTopoTools_CRNBasinwide.git /LSDTopoTools/Git_projects/LSDTopoTools_CRNBasinwide    
+
+    # Check if parent directories exist
+    if ! [ -d /LSDTopoTools/Git_projects ]
+      then
+        echo "Need to make the Git projects folder"
+        mkdir /LSDTopoTools/Git_projects
+      else 
+        echo "I found a Git_projects folder."
+    fi
+    
+    # Check if parent directories exist, part 2
+    if ! [ -d /LSDTopoTools/Topographic_projects ]
+      then
+        echo "Need to make the Topographic projects folder"
+        mkdir /LSDTopoTools/Topographic_projects
+      else 
+        echo "I found a Topographic_projects folder."
+    fi    
+      
+    # check if the files have been cloned
+    if [ -f /LSDTopoTools/Git_projects/LSDTopoTools_AnalysisDriver/LSDRaster.cpp ]
+      then
+        echo "LSDTopoTools_AnalysisDriver exists, updating."
+        git --work-tree=/LSDTopoTools/Git_projects/LSDTopoTools_AnalysisDriver --git-dir=/LSDTopoTools/Git_projects/LSDTopoTools_AnalysisDriver/.git  pull origin master
+      else
+        echo "cloning the analysis packages"
+        git clone https://github.com/LSDtopotools/LSDTopoTools_AnalysisDriver.git /LSDTopoTools/Git_projects/LSDTopoTools_AnalysisDriver
+    fi
+
+    if [ -f /LSDTopoTools/Git_projects/LSDTopoTools_CRNBasinwide/LSDRaster.cpp ]
+      then
+        echo "LSDTopoTools_CRNBasinwide exists, updating"
+        git --work-tree=/LSDTopoTools/Git_projects/LSDTopoTools_CRNBasinwide --git-dir=/LSDTopoTools/Git_projects/LSDTopoTools_CRNBasinwide/.git pull origin master
+      else
+        echo "Cloning the cosmogenic packages"
+        git clone https://github.com/LSDtopotools/LSDTopoTools_CRNBasinwide.git /LSDTopoTools/Git_projects/LSDTopoTools_CRNBasinwide 
+    fi
+
+
   SHELL
 end
