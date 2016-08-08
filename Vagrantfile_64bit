@@ -80,7 +80,7 @@ Vagrant.configure(2) do |config|
         echo "LSDTopoTools_ChiMudd2014 exists, updating"
         git --work-tree=/LSDTopoTools/Git_projects/LSDTopoTools_ChiMudd2014 --git-dir=/LSDTopoTools/Git_projects/LSDTopoTools_ChiMudd2014/.git pull origin master
       else
-        echo "Cloning the cosmogenic packages"
+        echo "Cloning the chi analysis packages"
         git clone https://github.com/LSDtopotools/LSDTopoTools_ChiMudd2014.git /LSDTopoTools/Git_projects/LSDTopoTools_ChiMudd2014 
     fi
 
