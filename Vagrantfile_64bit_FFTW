@@ -35,8 +35,16 @@ Vagrant.configure(2) do |config|
   # This provisions the machine through a shell script
   config.vm.provision "shell", inline: <<-SHELL
     sudo apt-get update
+    
+    # Install git
     sudo apt-get install -y git
+    
+    # Install gdal
     sudo apt-get install -y gdal-bin
+    
+    # Install FFTW
+    sudo apt-get install -y libfftw3-dev
+    
     
     # Check if parent directories exist
     if ! [ -d /LSDTopoTools/Git_projects ]
@@ -109,46 +117,7 @@ Vagrant.configure(2) do |config|
         echo "Cloning the channel extraction packages"
         git clone https://github.com/LSDtopotools/LSDTopoTools_ChannelExtraction.git /LSDTopoTools/Git_projects/LSDTopoTools_ChannelExtraction 
     fi
-
-
-    # This is all the stuff for FFTW
-    # First check if FFTW has been downloaded already
-    if [ -d /LSDTopoTools/fftw-3.3.4 ]
-      then
-        echo "I've already got FFTW!"
-      
-      else
-        # you need to go into the LSDTopoTools folder
-        cd /LSDTopoTools
-      
-        # You need fortrant 77 for FFTW. Get it
-        sudo apt-get install -y fort77
-        
-        # Get FFTW 3.3.4 from the internets
-        echo "I am getting the FFTW tarbal. This is being done silently."        
-        wget -q http://www.fftw.org/fftw-3.3.4.tar.gz
-        echo "Okay I should have that now. I am going to unpack it. I will also do this silently."
-        tar -zxf fftw-3.3.4.tar.gz 
-        
-        
-        #echo "I've now unzipped that for you. Lets move on to configure FFTW!"
-        #cd fftw-3.3.4 
-        #./configure
-        
-        
-        # now compile it
-        echo "I am about to compile FFTW. WARNING!! This might take a while."
-        cd /LSDTopoTools/fftw-3.3.4/
-        ./configure
-    
-        echo "I am finished configuring. Now I will run the makefile. WARNING this will take ages."
-        make 
-        
-        echo "Now I am installing FFTW."
-        make install
-        cd ~       
-    fi
-    
+   
 
   SHELL
 end
