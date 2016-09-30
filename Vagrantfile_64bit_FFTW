@@ -64,22 +64,15 @@ Vagrant.configure(2) do |config|
         echo "I found a Topographic_projects folder."
     fi    
 
-    # Check if parent directories exist, part 3
-    if ! [ -d /LSDTopoTools/Topographic_projects/Test_data ]
+    # check if the example dataset files have been cloned
+    if [ -f /LSDTopoTools/Topographic_projects/Test_data/Mandakini.bil ]
       then
-        echo "Need to make the Test_data folder"
-        mkdir /LSDTopoTools/Topographic_projects/Test_data
-        
-        wget -P /LSDTopoTools/Topographic_projects/Test_data/ https://raw.githubusercontent.com/LSDtopotools/ExampleTopoDatasets/master/Mandakini.hdr 
-        wget -P /LSDTopoTools/Topographic_projects/Test_data/ https://raw.githubusercontent.com/LSDtopotools/ExampleTopoDatasets/master/Mandakini.bil
-        wget -P /LSDTopoTools/Topographic_projects/Test_data/ https://raw.githubusercontent.com/LSDtopotools/ExampleTopoDatasets/master/gabilan.bil
-        wget -P /LSDTopoTools/Topographic_projects/Test_data/ https://raw.githubusercontent.com/LSDtopotools/ExampleTopoDatasets/master/gabilan.hdr 
-        wget -P /LSDTopoTools/Topographic_projects/Test_data/ https://raw.githubusercontent.com/LSDtopotools/ExampleTopoDatasets/master/WA.bil 
-        wget -P /LSDTopoTools/Topographic_projects/Test_data/ https://raw.githubusercontent.com/LSDtopotools/ExampleTopoDatasets/master/WA.hdr 
-        
-      else 
-        echo "I found a Test_data folder."
-    fi    
+        echo "Example data exists, updating."
+        git --work-tree=/LSDTopoTools/Topographic_projects/Test_data --git-dir=/LSDTopoTools/Topographic_projects/Test_data/.git  pull origin master
+      else
+        echo "cloning the analysis packages"
+        git clone https://github.com/LSDtopotools/LSDTT_vagrant_datasets.git /LSDTopoTools/Topographic_projects/Test_data
+    fi  
       
     # check if the files have been cloned
     if [ -f /LSDTopoTools/Git_projects/LSDTopoTools_AnalysisDriver/LSDRaster.cpp ]
