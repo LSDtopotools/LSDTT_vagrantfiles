@@ -42,6 +42,9 @@ Vagrant.configure(2) do |config|
     # Install gdal
     sudo apt-get install -y gdal-bin
     
+    # Install python gdal tools
+    sudo apt-get install -y python-gdal 
+    
     # Install FFTW
     sudo apt-get install -y libfftw3-dev
     
