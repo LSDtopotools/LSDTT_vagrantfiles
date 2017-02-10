@@ -62,7 +62,18 @@ Vagrant.configure(2) do |config|
         mkdir /LSDTopoTools/Topographic_projects
       else 
         echo "I found a Topographic_projects folder."
-    fi    
+    fi 
+    
+    # Download the setup tool
+    if [ -f /LSDTopoTools/LSDTopoToolsSetup.py ]
+      then
+    	wget -P /LSDTopoTools/ https://raw.githubusercontent.com/LSDtopotools/LSDAutomation/master/LSDTopoToolsSetup.py
+    fi
+    
+    # Run setup
+    #python /LSDTopoTools/LSDTopoToolsSetup.py -id 0
+
+    
 
     # check if the example dataset files have been cloned
     if [ -f /LSDTopoTools/Topographic_projects/Test_data/Mandakini.bil ]
