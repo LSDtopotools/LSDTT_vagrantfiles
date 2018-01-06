@@ -73,8 +73,26 @@ Vagrant.configure(2) do |config|
     # Download the setup tool
     if [ -f /LSDTopoTools/LSDTopoToolsSetup.py ]
       then
-    	wget -P /LSDTopoTools/ https://raw.githubusercontent.com/LSDtopotools/LSDAutomation/master/LSDTopoToolsSetup.py
+    	rm /LSDTopoTools/LSDTopoToolsSetup.py 
+        wget -P /LSDTopoTools/ https://raw.githubusercontent.com/LSDtopotools/LSDAutomation/master/LSDTopoToolsSetup.py
+        wget -P .
+    else
+        wget -P /LSDTopoTools/ https://raw.githubusercontent.com/LSDtopotools/LSDAutomation/master/LSDTopoToolsSetup.py
+        wget -P .
     fi
+
+    
+    # Download the path tool
+    if [ -f /LSDTopoTools/LSDTT_path_adjuster.sh ]
+      then
+    	rm /LSDTopoTools/LSDTT_path_adjuster.sh 
+        wget -P /LSDTopoTools/ https://raw.githubusercontent.com/LSDtopotools/LSDAutomation/master/LSDTT_path_adjuster.sh
+        wget -P .
+    else
+        wget -P /LSDTopoTools/ https://raw.githubusercontent.com/LSDtopotools/LSDAutomation/master/LSDTT_path_adjuster.sh
+        wget -P .
+    fi    
+    
     
     # Run setup
     #python /LSDTopoTools/LSDTopoToolsSetup.py -id 0
